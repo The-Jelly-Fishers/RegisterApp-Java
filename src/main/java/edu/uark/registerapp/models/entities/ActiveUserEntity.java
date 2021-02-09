@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-import edu.uark.registerapp.models.api.ActiveUser; // ????
+import edu.uark.registerapp.models.api.ActiveUser;
 
 @Entity
 @Table(name="activeuser")
@@ -102,11 +102,9 @@ public class ActiveUserEntity {
 	public ActiveUserEntity() {
 		this.id = new UUID(0, 0);
 		this.employeeid = StringUtils.EMPTY;
-		this.name = StringUtils.EMPTY;;
-		this.classification = StringUtils.EMPTY;;
-		this.sessionkey = StringUtils.EMPTY;;
-
-		//this.lookupCode = StringUtils.EMPTY; ???? do strings this way
+		this.name = StringUtils.EMPTY;
+		this.classification = StringUtils.EMPTY;
+		this.sessionkey = StringUtils.EMPTY;
 	}
 
 	public ActiveUserEntity(final String employeeid, final String name, final String classification, final String sessionkey) {
