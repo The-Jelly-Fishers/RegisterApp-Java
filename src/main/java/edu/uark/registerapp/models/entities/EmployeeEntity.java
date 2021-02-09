@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-import edu.uark.registerapp.models.api.Product; //should this be employee
+import edu.uark.registerapp.models.api.Product; //should this be employee ???
 
 
 @Entity
