@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-import edu.uark.registerapp.models.api.Product; //should this be employee ???
+import edu.uark.registerapp.models.api.Employee; 
 
 
 @Entity
@@ -122,26 +122,26 @@ public class EmployeeEntity {
 		return this.createdOn;
 	}
 
-	public Product synchronize(final Product apiProduct) {
-        apiProduct.setId(this.getId());
-		this.setEmployeeId(apiProduct.getEmployeeId());
-        this.setFirstName(apiProduct.getFirstName());
-		this.setLastName(apiProduct.getLastName());
-		this.setPassword(apiProduct.getPassword());
-		this.setActive(apiProduct.getActive());
-		this.setClassification(apiProduct.getClassification());
-		apiProduct.setCreatedOn(this.getCreatedOn());
-		return apiProduct;
+	public Employee synchronize(final Employee apiEmployee) {
+        apiEmployee.setId(this.getId());
+		this.setEmployeeId(apiEmployee.getEmployeeId());
+        this.setFirstName(apiEmployee.getFirstName());
+		this.setLastName(apiEmployee.getLastName());
+		this.setPassword(apiEmployee.getPassword());
+		this.setActive(apiEmployee.getActive());
+		this.setClassification(apiEmployee.getClassification());
+		apiEmployee.setCreatedOn(this.getCreatedOn());
+		return apiEmployee;
 	}
 
 	public EmployeeEntity() {
 		this.id = new UUID(0, 0);
-        this.employeeid = "";
-        this.firstname = "";
-        this.lastname = "";
-        this.password = "";
-        this.active = "";
-        this.classification = "";
+        this.employeeid = StringUtils.EMPTY;
+        this.firstname = StringUtils.EMPTY;
+        this.lastname = StringUtils.EMPTY;
+        this.password = StringUtils.EMPTY;
+        this.active = StringUtils.EMPTY;
+        this.classification = StringUtils.EMPTY;
         this.managerid = -1;
 
 	}
@@ -158,15 +158,15 @@ public class EmployeeEntity {
         
 	}
 
-	public EmployeeEntity(final Product apiProduct) {
+	public EmployeeEntity(final Employee apiEmployee) {
         this.id = new UUID(0, 0);
-		this.employeeid = apiProduct.getEmployeeId();
-        this.firstname = apiProduct.getFirstName();
-        this.lastname = apiProduct.getLastName();
-        this.password = apiProduct.getPassword();
-        this.active = apiProduct.getActive();
-        this.classification = apiProduct.getClassification();
-        this.managerid = apiProduct.getManagerId();
+		this.employeeid = apiEmployee.getEmployeeId();
+        this.firstname = apiEmployee.getFirstName();
+        this.lastname = apiEmployee.getLastName();
+        this.password = apiEmployee.getPassword();
+        this.active = apiEmployee.getActive();
+        this.classification = apiEmployee.getClassification();
+        this.managerid = apiEmployee.getManagerId();
 	}
 }
 

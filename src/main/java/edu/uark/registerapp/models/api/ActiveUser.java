@@ -40,10 +40,10 @@ public class ActiveUser extends ApiResponse{
 		return this;
 	}
 
-    private String classification;
+	private String classification;
 
 	public String getClassification() {
-		return this.name;
+		return this.classification;
 	}
 
 	public ActiveUser setClassification(final String classification) {
