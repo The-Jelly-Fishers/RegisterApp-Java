@@ -1,67 +1,48 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>Sign In</title>
+	<title>Sign-In Page</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<!--link rel="stylesheet" type="text/css" href="/styles/master.css"-->
-	<!--link rel="stylesheet" type="text/css" href="/styles/productListing.css"-->
+	<!-- link rel="stylesheet" type="text/css" href="/styles/master.css" -->
+	<!-- link rel="stylesheet" type="text/css" href="/styles/productDetail.css" -->
 
-	<!--script type="text/javascript" src="/scripts/master.js" defer></script-->
-	<!--script type="text/javascript" src="/scripts/productListing.js" defer></script-->
+	<!-- script type="text/javascript" src="/scripts/master.js" defer></script>
+	<script type="text/javascript" src="/scripts/productDetail.js" defer></script-->
 </head>
 
 <body>
-	<div class="header">
-		<h1 class="primary-message">Welcome</h1>
-	</div>
 
-	<div id="main" class="main">
-		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+	<div class="header">
+		<h1 class="primary-message">Welcome!</h1>
+	</div>
+	
+    <div id="main" class="main">
+        <div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
 
-		<!--div class="signInWrapper">
-			<div>
-				<a href="/" class="button">Sign-In</a>
-			</div-->
+        <div id="signInForm" class="signInForm">
+            <!-- add onsubmit="" function here later to verify form info. is in correct format -->
+            <!-- FINISH action="/" LATER FOR GETTING USER DATA -->
+            <!-- add th:value="" later to the input tags; for getting user data in each field -->
+            <form id="login" onsubmit="" action="/" method="post">
+                <label for="empID">Employee ID:</label><br>
+                <input type="number" id="empID" name="empID">
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password">
+                <label for="submitButton">Sign In</label><br>
+                <input type="submit" id="submitButton" name="submitButton">
+            </form>
+        </div>
+    </div>
 
-			<br /><br />
-
-			<ul id="signInView" class="signIn">
-				<!--li th:each="product : ${products}">
-					<input type="hidden" name="productId" th:value="${product.id}" />
-					<span class="productLookupCodeDisplay" th:text="${product.lookupCode}">lookupCode</span>
-					<br />&nbsp;&nbsp;<span class="productCountDisplay" th:text="${product.count}">0</span>
-					<br />&nbsp;&nbsp;<span class="productCreatedOnDisplay" th:text="${product.createdOn}">12/31/1999</span>
-				</li-->
-			</ul>
-		</div>
-
-		<form>
-			<label for="empID">Employee ID:<label><br>
-			<input type="text" id="empID" name ="empID">
-			<label for="password">Password:<label><br>
-			<input type="text" id="password" name ="password">
-			<input type="submit" value="Sign-In">
-		</form>
-		<!--div class="hidden">
-			<input type="checkbox" id="isRefreshed" class="hidden">
-			<script type="text/javascript">
-				window.onunload = function() {
-					const isRefreshedElement = document.getElementById("isRefreshed");
-
-					if(!isRefreshedElement.checked) {
-						isRefreshedElement.checked = true;
-					} else {
-						isRefreshedElement.checked = false;
-						location.reload();
-					}
-				}
-			</script>
-		</div-->
-	</div>
-		
 </body>
 
 </html>
+
+
+
+
+
+
