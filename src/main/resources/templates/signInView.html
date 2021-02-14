@@ -14,7 +14,10 @@
 <body>
 
     <script>
+        function formValidation() {
         
+            return true;
+        }
     </script>
 
 	<div class="header">
@@ -30,7 +33,7 @@
             <!-- add onsubmit="" function here later to verify form info. is in correct format -->
             <!-- FINISH action="/" LATER FOR GETTING USER DATA -->
             <!-- add th:value="" later to the input tags; for getting user data in each field -->
-            <form id="login" onsubmit="" action="/" method="post">
+            <form id="login" onsubmit="formValidation()" action="/" method="post">
                 <label for="empID">Employee ID:</label><br>
                 <input type="number" id="empID" name="empID">
                 <label for="password">Password:</label><br>
