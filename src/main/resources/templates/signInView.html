@@ -17,9 +17,11 @@
         function formValidation() {
             var employeeID = document.getElementById("empID").value;
             var password = document.getElementById("password").value;
+            //checks all three fields for conditions, if they pass then the form is validated
             if(employeeID != '' && isNaN(employeeID) == false && password != ''){
                 return true;
             }
+            //if one of the conditions fails false is returned and an associated print statement is printed
             else{
                 if(employeeID == ''){
                     console.log("Employee ID can not be blank");
