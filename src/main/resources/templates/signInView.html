@@ -1,4 +1,4 @@
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<title>Sign-In Page</title>
@@ -40,6 +40,7 @@
 
 	<div class="header">
 		<h1 class="primary-message">Welcome!</h1>
+        <h2 class="secondar-message">Sign-In Below</h2>
 	</div>
 	
     <div id="main" class="main">
@@ -48,15 +49,15 @@
 		</div>
 
         <div id="signInForm" class="signInForm">
-            <!-- add onsubmit="" function here later to verify form info. is in correct format -->
-            <!-- FINISH action="/" LATER FOR GETTING USER DATA -->
+            <!-- add onsubmit="" function here to verify form info. is in correct format -->
             <!-- add th:value="" later to the input tags; for getting user data in each field -->
-            <form id="login" onsubmit="formValidation()" action="/" method="post">
-                <label for="empID">Employee ID:</label><br>
-                <input type="number" id="empID" name="empID">
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password">
-                <label for="submitButton">Sign In</label><br>
+            <!-- add action="..." stuff back later once Controller class is set up to take user input... -->
+            <!-- add method="post" once set up to take user input -->
+            <form id="login" onsubmit="formValidation()" th:action="@{/signInView}" method="post"> <!-- test with and without post -->
+                <p id="labelEmpID">Employee ID:</p>
+                <input th:value="${empID}" type="number" id="empID" name="empID">
+                <p idr="labelPassword">Password:</p>
+                <input th:value="${password}" type="password" id="password" name="password"><br>
                 <input type="submit" id="submitButton" name="submitButton">
             </form>
         </div>
