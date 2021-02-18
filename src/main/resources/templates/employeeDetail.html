@@ -1,74 +1,88 @@
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Register - Product</title>
+	<title>Register-Employee</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<link rel="stylesheet" type="text/css" href="/styles/master.css">
-	<link rel="stylesheet" type="text/css" href="/styles/productDetail.css">
+	<!-- link rel="stylesheet" type="text/css" href="/styles/master.css" -->
+	<!-- link rel="stylesheet" type="text/css" href="/styles/productDetail.css" -->
 
-	<script type="text/javascript" src="/scripts/master.js" defer></script>
-	<script type="text/javascript" src="/scripts/productDetail.js" defer></script>
+	<!-- script type="text/javascript" src="/scripts/master.js" defer></script>
+	<script type="text/javascript" src="/scripts/productDetail.js" defer></script-->
 </head>
 
 <body>
 
+    <script>
+        function formValidation() {
+            var firstName = document.getElementById("fName").value;
+			var lastName = document.getElementById("lName").value;
+            var password = document.getElementById("password").value;
+			var verPass = document.getElementById("vpass").value;
+			var empType = document.getElementById("eType").value;
+            //checks all three fields for conditions, if they pass then the form is validated
+            if(firstName != '' && lastName != ''&& password != ''&& verPass != ''&& empType != ''){
+                return true;
+            }
+            //if one of the conditions fails false is returned and an associated print statement is printed
+            else{
+                if(firstName == ''){
+                    console.log("First Name can not be blank");
+                }
+                if(lastName == ''){
+                    console.log("Last Name can not be blank");
+                }
+                if(password == ''){
+                    console.log("Password must not be blank");
+                }
+				if(verPass == ''){
+                    console.log("Password Verify can not be blank");
+                }
+				if(empType == ''){
+                    console.log("Emp Type can not be blank");
+                }
+                return false;
+            }
+            return true;
+        }
+    </script>
+
 	<div class="header">
 		<h1 class="primary-message">Employee Details</h1>
 	</div>
-		
-	<!-- <div id="main" class="main">
-		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+	
+    <div id="main" class="main">
+        <div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
 
-		<div class="productDetailWrapper">
-			<table id="productDetails">
-				<tbody>
-					<tr class="hidden">
-						<td>ID:</td>
-						<td>
-							<input id="productId" type="hidden" th:value="${!product.isEmpty} ? ${product.id} : ''" />
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Lookup Code:</td>
-						<td>
-							<input id="productLookupCode" type="text" th:value="${!product.isEmpty} ? ${product.lookupCode} : ''" class="update" />
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Count:</td>
-						<td>
-							<input id="productCount" type="number" th:value="${!product.isEmpty} ? ${product.count} : ''" class="update" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+        <div id="signInForm" class="signInForm">
+            <!-- add onsubmit="" function here to verify form info. is in correct format -->
+            <!-- add th:value="" later to the input tags; for getting user data in each field -->
+            <!-- add action="..." stuff back later once Controller class is set up to take user input... -->
+            <!-- add method="post" once set up to take user input -->
+            <form id="login" onsubmit="formValidation()" th:action="@{/employeeDetail}" method="post"> <!-- test with and without post -->
+                <p id="labelFName">First Name:</p>
+                <input th:value="${fName}" type="text" id="fName" name="fName">
+				<p id="labelLName">Last Name:</p>
+                <input th:value="${lName}" type="text" id="lName" name="lName">
+                <p idr="labelPassword">Password:</p>
+                <input th:value="${password}" type="password" id="password" name="password"><br>
+				<p id="labelVPass">Verify Password:</p>
+                <input th:value="${vPass}" type="password" id="vPass" name="vPass">
+				<p id="labelEmpType">Employee Type:</p>
+                <input th:value="${empType}" type="text" id="empType" name="empType">
+                <input type="submit" id="submitButton" name="submitButton">
+            </form>
+        </div>
+    </div>
 
-		<div class="productActionsWrapper">
-			<br />
-			<div id="deleteActionContainer" th:class="${product.isEmpty} ? hidden : ''">
-				<button id="deleteButton" type="button" class="action">Delete</button>
-				<br />
-				<br />
-			</div>
-			<button id="saveButton" type="button" class="action">Save</button>
-		</div>
-
-		<div id="productSavedAlertModal" class="modal animate-opacity-show">
-			<div class="modal-content">
-				<div class="container gray-blue">
-					<h1>
-						<span>Product</span><br />
-						<span>Saved</span>
-					</h1>
-				</div>
-			</div>
-		</div>
-	</div> -->
-		
 </body>
 
 </html>
+
+
+
+
+
+

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // package edu.uark.registerapp.controllers;
 
 // import java.util.UUID;
@@ -67,7 +66,6 @@
 // 	// @Autowired
 // 	// private ProductUpdateCommand productUpdateCommand;
 // //}
-=======
 package edu.uark.registerapp.controllers;
 
 import java.util.UUID;
@@ -89,9 +87,9 @@ import edu.uark.registerapp.models.api.Employee;
 import edu.uark.registerapp.models.api.Employeesignin;
 //import edu.uark.registerapp.models.entities.EmployeeEntity;
 
-@RestController
-@RequestMapping(value = "/signInView/api/Employeesignin")
-public class SignInRestController {
+// @RestController
+// @RequestMapping(value = "/api/Employeesignin")
+// public class SignInRestController {
 	// @RequestMapping(value = "/", method = RequestMethod.POST)
 	// public @ResponseBody ApiResponse createProduct(
 	// 	@RequestBody final Product product
@@ -114,26 +112,25 @@ public class SignInRestController {
 	// 		.execute();
 	// }
 
-	@RequestMapping(value = "/{EmployeeId}", method = RequestMethod.DELETE)
-	public @ResponseBody ApiResponse removeEmployee(
-		@PathVariable final UUID EmployeeId
-	) {
+	// @RequestMapping(value = "/{EmployeeId}", method = RequestMethod.DELETE)
+	// public @ResponseBody ApiResponse removeEmployee(
+	// 	@PathVariable final UUID EmployeeId
+	// ) {
 
-		// this.removeEmployeeCommand
-		// 	.setEmployeeId(EmployeeId)
-		// 	.execute();
+	// 	// this.removeEmployeeCommand
+	// 	// 	.setEmployeeId(EmployeeId)
+	// 	// 	.execute();
 
-		return new ApiResponse();
-	}
+	// 	return new ApiResponse();
+	// }
 
 	// Properties
 	// @Autowired
 	// private ProductCreateCommand productCreateCommand;
 	
-	@Autowired
-	private RemoveEmployeeCommand removeEmployeeCommand;
+	//@Autowired
+	//private RemoveEmployeeCommand removeEmployeeCommand;
 	
 	// @Autowired
 	// private ProductUpdateCommand productUpdateCommand;
-}
->>>>>>> f78369a6d30e155f0e53528e9c636710f0865020
+//}
