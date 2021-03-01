@@ -53,7 +53,9 @@
 
         <div id="signInForm" class="signInForm">
             <form id="login" onsubmit="formValidation()" th:action="@{/employeeDetail}" method="post">
-                <p id="labelFName">First Name:</p>
+                <p id="labelempId">Employee ID:</p>
+                <input th:value="${empId}" type="text" id="empId" name="empId">
+				<p id="labelFName">First Name:</p>
                 <input th:value="${fName}" type="text" id="fName" name="fName">
 				<p id="labelLName">Last Name:</p>
                 <input th:value="${lName}" type="text" id="lName" name="lName">

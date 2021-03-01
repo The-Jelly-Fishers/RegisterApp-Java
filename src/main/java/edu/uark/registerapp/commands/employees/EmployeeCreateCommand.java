@@ -1,6 +1,7 @@
 package edu.uark.registerapp.commands.employees;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -41,7 +42,7 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
 	private EmployeeEntity createEmployeeEntity() {
 		final Optional<EmployeeEntity> queriedEmployeeEntity =
 			this.employeeRepository
-				.findById(this.apiEmployee.getEmployeeId()); // can convert to UUID type 
+				.findById(this.apiEmployee.getId()); // can convert to UUID type 
 
 		if (queriedEmployeeEntity.isPresent()) {
 			// Lookupcode already defined for another employee.

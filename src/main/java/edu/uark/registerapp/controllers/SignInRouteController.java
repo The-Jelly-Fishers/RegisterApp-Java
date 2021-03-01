@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,28 +87,38 @@ public class SignInRouteController {
 		return "Sign Success"; 
 	}
 
-	// @RequestMapping(value = "/{empId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	// public ModelAndView startWithEmployee(@PathVariable final UUID empId, @RequestParam Map<String, String> allParams) {
-	// 	System.out.println("Parameters are: " + allParams.entrySet()); 
-	// 	final ModelAndView modelAndView =
-	// 		new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName());//should actually be redirecting to main menu
+	@RequestMapping(value = "/{empId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	//@RequestMapping(value="/{empId}", method = RequestMethod.POST)
+	// @PathVariable("empId") UUID empID
+	
+	public ModelAndView startWithEmployee(@PathVariable final String empId, @RequestParam Map<String, String> allParams) {
+	//public ModelAndView startWithEmployee(@RequestParam(value = "empId", required = false ) UUID empId) {
+		// System.out.println("Parameters are: " + allParams.entrySet()); 
+		final ModelAndView modelAndView =
+			new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());//should actually be redirecting to main menu
 
-	// 	try {
-	// 		modelAndView.addObject(
-	// 			ViewModelNames.EMPLOYEE.getValue(),
-	// 			this.employeeQuery.setEmployeeId(empId).execute());
-	// 	} catch (final Exception e) {
-	// 		modelAndView.addObject(
-	// 			ViewModelNames.ERROR_MESSAGE.getValue(),
-	// 			e.getMessage());
-	// 		modelAndView.addObject(
-	// 			ViewModelNames.EMPLOYEE.getValue(),
-	// 			(new Employee())
-	// 				.setPassword(" ")
-	// 				.setEmployeeId(StringUtils.EMPTY));
-	// 	}
-	// 	return modelAndView;
-	// }
+		UUID employId = null; 
+		if (empId != null)
+		{
+			employId = UUID.fromString(empId); 
+		}
+
+		try {
+			modelAndView.addObject(
+				ViewModelNames.EMPLOYEE.getValue(),
+				this.employeeQuery.setEmployeeId(employId).execute());
+		} catch (final Exception e) {
+			modelAndView.addObject(
+				ViewModelNames.ERROR_MESSAGE.getValue(),
+				e.getMessage());
+			modelAndView.addObject(
+				ViewModelNames.EMPLOYEE.getValue(),
+				(new Employee())
+					.setPassword(" ")
+					.setEmployeeId(StringUtils.EMPTY));
+		}
+		return modelAndView;
+	}
 //////////////////////////////////////////////////////////////Sign In View Routing///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////Employee Detail Routing////////////////////////////////////////////
 	// @RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
@@ -123,15 +134,16 @@ public class SignInRouteController {
 	
 	// }
 
-	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	@ResponseBody
-	public ModelAndView showDetailInfo(@RequestParam Map<String, String> allParams)
-	{
-		System.out.println("Parameters are: " + allParams.entrySet()); 
+	// @RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	// @ResponseBody
+	// public ModelAndView showDetailInfo(@RequestParam Map<String, String> allParams)
+	// {
+	// 	System.out.println("Parameters are: " + allParams.entrySet()); 
 
+	// 	// take parameters & put it into the database 
 
-		return (new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName())); // rerouting back to sign in page, should eventually only do this if first employee 
-	}
+	// 	return (new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName())); // rerouting back to sign in page, should eventually only do this if first employee 
+	// }
 
 		@RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
 		@ResponseBody
