@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import edu.uark.registerapp.commands.products.EmployeeQuery;
+import edu.uark.registerapp.commands.employees.EmployeeQuery;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Employee;
@@ -29,9 +29,9 @@ public class SignInRouteController {
 	@RequestMapping(value = "/signInView", method = RequestMethod.GET)
 	@ResponseBody
 	// add request param later
-	public ModelAndView showEmployeeListing() {
+	public ModelAndView showEmployeeListing(@RequestParam Map<String, String> allParams) {
 		System.out.println("Sign In View Success");
-		
+		System.out.println("params: " + allParams.entrySet()); 
 		ModelAndView modelAndView =
 			new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName());
 		
@@ -39,16 +39,42 @@ public class SignInRouteController {
 	
 	}
 //////////////////////////////////////////////////////////////Sign In View Routing///////////////////////////////////////////////
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/")
 	@ResponseBody
 	// add request param later
 	public ModelAndView showSignIn() {
-		System.out.println("Sign In Success");
-		// commented out at 10:45 pm 
+		// if at least one employee exists, allow sign in page to be viewed first 
 		ModelAndView modelAndView =
 			new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName());
-		
-		return modelAndView;
+
+		try { // will reroute if no employee... is is what I have below correct? 
+			System.out.println("inside try..."); 
+			modelAndView.addObject(
+			ViewModelNames.EMPLOYEE.getValue(),
+			this.employeeQuery.execute());
+			// ModelAndView modAndView = new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName()); 
+		} catch (final Exception e) {
+			System.out.println("inside catch...");
+			ModelAndView model = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()); 
+			return model; 
+			// modelAndView.addObject(
+			// 	ViewModelNames.ERROR_MESSAGE.getValue(),
+			// 	e.getMessage());
+		}
+		/*try 
+		{
+			employeeQuery
+			ModelAndView modAndView = new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName()); 
+			return modAndView; 
+		}
+		catch (Exception e) // if no employees exist, reroute to employeeDetails so that html page is viewed first 
+		{
+			ModelAndView model = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()); 
+			return model; 
+		}
+		*/
+		return modelAndView; 
 	}
 
 	@RequestMapping(value = "/signInView", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -56,6 +82,7 @@ public class SignInRouteController {
 	public String showSignInfo(@RequestParam Map<String, String> allParams)//httpservletrequest also goes here
 	{
 		System.out.println("Parameters are: " + allParams.entrySet()); 
+		System.out.println("inside sign in info");
 		return "Sign Success"; 
 	}
 
@@ -96,29 +123,32 @@ public class SignInRouteController {
 	
 	// }
 
-	// @RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	// @ResponseBody
-	// public String showDetailInfo(@RequestParam Map<String, String> allParams)
-	// {
-	// 	System.out.println("Parameters are: " + allParams.entrySet()); 
-	// 	return "Employee Success"; 
-	// }
+	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@ResponseBody
+	public ModelAndView showDetailInfo(@RequestParam Map<String, String> allParams)
+	{
+		System.out.println("Parameters are: " + allParams.entrySet()); 
 
-	public class EmployeeDetailRouteController {
-		@RequestMapping(value = "/employeeDetail")
-		public ModelAndView start() {
-			System.out.println("Employee Detail Success");
+
+		return (new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName())); // rerouting back to sign in page, should eventually only do this if first employee 
+	}
+
+		@RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
+		@ResponseBody
+		public ModelAndView employeeDetail() {
+			System.out.println("Employee Detail Success"); 
+
 			return (new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()));
 		}
 	
-		@RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
+		/*@RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
 		public ModelAndView startWithProduct(@PathVariable final UUID productId) {
 			System.out.println("Employee Detail Success");
 			final ModelAndView modelAndView =
 				new ModelAndView(ViewNames.PRODUCT_DETAIL.getViewName());
 			return modelAndView;
 		}
-	}
+		*/
 //////////////////////////////////////////////////////////////Employee Detail Routing////////////////////////////////////////////
 //////////////////////////////////////////////////////////////Main Menu Routing//////////////////////////////////////////////////
 @RequestMapping(value = "/mainMenu", method = RequestMethod.GET)
