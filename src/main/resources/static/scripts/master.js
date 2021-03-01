@@ -166,3 +166,6 @@ function getErrorMessageDisplayElement() {
 	return document.getElementById("errorMessage");
 }
 // End getters and setters
+function myFunction(){
+	
+}

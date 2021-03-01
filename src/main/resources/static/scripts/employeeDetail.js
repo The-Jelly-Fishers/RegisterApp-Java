@@ -1,31 +1,31 @@
 let hideEmployeeSavedAlertTimer = undefined;
 
 document.addEventListener("DOMContentLoaded", () => {
-	const EmployeeLookupCodeElement = getEmployeeLookupCodeElement();
+	const employeeLookupCodeElement = getEmployeeLookupCodeElement();
 
 	getEmployeeCountElement().addEventListener("keypress", EmployeeCountKeypress);
-	EmployeeLookupCodeElement.addEventListener("keypress", EmployeeLookupCodeKeypress);
+	employeeLookupCodeElement.addEventListener("keypress", EmployeeLookupCodeKeypress);
 	
 	getSaveActionElement().addEventListener("click", saveActionClick);
 	getDeleteActionElement().addEventListener("click", deleteActionClick);
 
-	if (!EmployeeLookupCodeElement.disabled) {
-		EmployeeLookupCodeElement.focus();
-		EmployeeLookupCodeElement.select();
+	if (!employeeLookupCodeElement.disabled) {
+		employeeLookupCodeElement.focus();
+		employeeLookupCodeElement.select();
 	}
 });
 
-function EmployeeLookupCodeKeypress(event) {
+function employeeLookupCodeKeypress(event) {
 	if (event.which !== 13) { // Enter key
 		return;
 	}
 
-	const EmployeeCountElement = getEmployeeCountElement();
-	EmployeeCountElement.focus();
-	EmployeeCountElement.select();
+	const employeeCountElement = getEmployeeCountElement();
+	employeeCountElement.focus();
+	employeeCountElement.select();
 }
 
-function EmployeeCountKeypress(event) {
+function employeeCountKeypress(event) {
 	if (event.which !== 13) { // Enter key
 		return;
 	}
@@ -42,17 +42,17 @@ function saveActionClick(event) {
 	const saveActionElement = event.target;
 	saveActionElement.disabled = true;
 
-	const productId = getEmployeeId();
-	const productIdIsDefined = ((EmployeeId != null) && (EmployeeId.trim() !== ""));
-	const saveActionUrl = ("/api/Employee/"
-		+ (EmployeeIdIsDefined ? EmployeeId : ""));
+	const employeeId = getEmployeeId();
+	const employeeIdIsDefined = ((EmployeeId != null) && (EmployeeId.trim() !== ""));
+	const saveActionUrl = ("/api/employee/"
+		+ (employeeIdIsDefined ? employeeId : ""));
 	const saveEmployeeRequest = {
-		id: EmployeeId,
+		id: employeeId,
 		count: getEmployeeCount(),
 		lookupCode: getEmployeeLookupCode()
 	};
 
-	if (EmployeeIdIsDefined) {
+	if (employeeIdIsDefined) {
 		ajaxPut(saveActionUrl, saveEmployeeRequest, (callbackResponse) => {
 			saveActionElement.disabled = false;
 
@@ -92,7 +92,7 @@ function validateSave() {
 		displayError("Please provide a valid employee count.");
 		return false;
 	} else if (count < 0) {
-		displayError("Employeet count may not be negative.");
+		displayError("Employee count may not be negative.");
 		return false;
 	}
 
@@ -123,7 +123,7 @@ function hideEmployeeSavedAlertModal() {
 // Delete
 function deleteActionClick(event) {
 	const deleteActionElement = event.target;
-	const deleteActionUrl = ("/api/Employee/" + getEmployeetId());
+	const deleteActionUrl = ("/api/employee/" + getEmployeetId());
 
 	deleteActionElement.disabled = true;
 
@@ -143,7 +143,7 @@ function getSaveActionElement() {
 }
 
 function getSavedAlertModalElement() {
-	return document.getElementById("productSavedAlertModal");
+	return document.getElementById("employeeSavedAlertModal");
 }
 
 function getDeleteActionElement() {

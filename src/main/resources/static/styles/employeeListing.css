@@ -1,15 +1,15 @@
-.EmployeeWrapper {
+.employeeWrapper {
 	display: inline-block;
 }
 
-.Employee {
+.employee {
 	margin: 0 0 2em 0;
 	list-style-type: none;
 	padding: 0;
 	width: 15em;
 }
 
-.Employee li {
+.employee li {
 	cursor: pointer;
 	background-color: #EEE;
 	margin: .5em;
@@ -19,7 +19,7 @@
 	text-align: left;
 }
 
-.Employee li:hover {
+.employee li:hover {
 	color: #607D8B;
 	background-color: #DDD;
 	left: .1em;

@@ -1,7 +1,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>Register - Product</title>
+	<title>Register - Menu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
 	<link rel="stylesheet" type="text/css" href="/styles/master.css">
@@ -9,6 +9,32 @@
 
 	<script type="text/javascript" src="/scripts/master.js" defer></script>
 	<script type="text/javascript" src="/scripts/productDetail.js" defer></script>
+    <style>
+        .button {
+          border: none;
+          color: white;
+          padding: 16px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          transition-duration: 0.4s;
+          cursor: pointer;
+        }
+        
+        .button1 {
+          background-color: white; 
+          color: black; 
+          border: 2px solid black;
+        }
+        
+        .button1:hover {
+          background-color: black;
+          color: white;
+        }
+        
+        </style>
 </head>
 
 <body>
@@ -17,58 +43,36 @@
 		<h1 class="primary-message">Main Menu</h1>
 	</div>
 		
-	<!-- <div id="main" class="main">
-		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+	<div id="main" class="main">
+        <div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
 
-		<div class="productDetailWrapper">
-			<table id="productDetails">
-				<tbody>
-					<tr class="hidden">
-						<td>ID:</td>
-						<td>
-							<input id="productId" type="hidden" th:value="${!product.isEmpty} ? ${product.id} : ''" />
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Lookup Code:</td>
-						<td>
-							<input id="productLookupCode" type="text" th:value="${!product.isEmpty} ? ${product.lookupCode} : ''" class="update" />
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Count:</td>
-						<td>
-							<input id="productCount" type="number" th:value="${!product.isEmpty} ? ${product.count} : ''" class="update" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+        <div id="signInForm" class="signInForm">
+            <!-- add onsubmit="" function here to verify form info. is in correct format -->
+            <!-- add th:value="" later to the input tags; for getting user data in each field -->
+            <!-- add action="..." stuff back later once Controller class is set up to take user input... -->
+            <!-- add method="post" once set up to take user input -->
+            <form id="login" onsubmit="formValidation()" th:action="@{/mainMenu}" method="post"> <!-- test with and without post -->
+                <button class="button button1">Start Txn</button>
+                <a href="/productListing/" class="button button1">Prod List</a>
+                <a href="/employeeDetail/" class="button button1">Emp Details</a>
+                <button class="button button1">Cashier Report</button>
+                <button type = "submit" name = "Logout" value = "myimage">
+                  <img src="logout.png" />
+                </button>
+            </form>
+            <!-- <div>
+              <a href="/productListing/" class="button button1">Prod List</a>
+              <a href="/employeeDetail/" class="button button1">Emp Details</a>
+            </div> -->
+            <!-- <button class="button button1">Cashier Report</button>
+            <button type = "submit" name = "Logout" value = "myimage">
+              <img src="logout.png" />
+            </button> -->
+        </div>
+    </div>
 
-		<div class="productActionsWrapper">
-			<br />
-			<div id="deleteActionContainer" th:class="${product.isEmpty} ? hidden : ''">
-				<button id="deleteButton" type="button" class="action">Delete</button>
-				<br />
-				<br />
-			</div>
-			<button id="saveButton" type="button" class="action">Save</button>
-		</div>
-
-		<div id="productSavedAlertModal" class="modal animate-opacity-show">
-			<div class="modal-content">
-				<div class="container gray-blue">
-					<h1>
-						<span>Product</span><br />
-						<span>Saved</span>
-					</h1>
-				</div>
-			</div>
-		</div>
-	</div> -->
-		
 </body>
 
 </html>

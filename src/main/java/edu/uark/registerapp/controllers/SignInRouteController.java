@@ -30,7 +30,7 @@ public class SignInRouteController {
 	@ResponseBody
 	// add request param later
 	public ModelAndView showEmployeeListing() {
-		System.out.println("does it enter? ");
+		System.out.println("Sign In View Success");
 		
 		ModelAndView modelAndView =
 			new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName());
@@ -43,7 +43,7 @@ public class SignInRouteController {
 	@ResponseBody
 	// add request param later
 	public ModelAndView showSignIn() {
-		System.out.println("does it enter? ");
+		System.out.println("Sign In Success");
 		// commented out at 10:45 pm 
 		ModelAndView modelAndView =
 			new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName());
@@ -56,7 +56,7 @@ public class SignInRouteController {
 	public String showSignInfo(@RequestParam Map<String, String> allParams)//httpservletrequest also goes here
 	{
 		System.out.println("Parameters are: " + allParams.entrySet()); 
-		return "Parameters Entered"; 
+		return "Sign Success"; 
 	}
 
 	// @RequestMapping(value = "/{empId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -83,27 +83,65 @@ public class SignInRouteController {
 	// }
 //////////////////////////////////////////////////////////////Sign In View Routing///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////Employee Detail Routing////////////////////////////////////////////
-	@RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
-	@ResponseBody
-	// add request param later
-	public ModelAndView showEmployeeDetail() {
-		System.out.println("will it enter? ");
+	// @RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
+	// @ResponseBody
+	// // add request param later
+	// public ModelAndView showEmployeeDetail() {
+	// 	System.out.println("will it enter? ");
 		
-		ModelAndView modelAndView =
-			new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());
+	// 	ModelAndView modelAndView =
+	// 		new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());
 		
-		return modelAndView;
+	// 	return modelAndView;
 	
-	}
+	// }
 
-	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	@ResponseBody
-	public String showDetailInfo(@RequestParam Map<String, String> allParams)
-	{
-		System.out.println("Parameters are: " + allParams.entrySet()); 
-		return "Parameters Entered"; 
+	// @RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	// @ResponseBody
+	// public String showDetailInfo(@RequestParam Map<String, String> allParams)
+	// {
+	// 	System.out.println("Parameters are: " + allParams.entrySet()); 
+	// 	return "Employee Success"; 
+	// }
+
+	public class EmployeeDetailRouteController {
+		@RequestMapping(value = "/employeeDetail")
+		public ModelAndView start() {
+			System.out.println("Employee Detail Success");
+			return (new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()));
+		}
+	
+		@RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
+		public ModelAndView startWithProduct(@PathVariable final UUID productId) {
+			System.out.println("Employee Detail Success");
+			final ModelAndView modelAndView =
+				new ModelAndView(ViewNames.PRODUCT_DETAIL.getViewName());
+			return modelAndView;
+		}
 	}
 //////////////////////////////////////////////////////////////Employee Detail Routing////////////////////////////////////////////
+//////////////////////////////////////////////////////////////Main Menu Routing//////////////////////////////////////////////////
+@RequestMapping(value = "/mainMenu", method = RequestMethod.GET)
+@ResponseBody
+// add request param later
+public ModelAndView showMainMenu() {
+	System.out.println("will it enter? ");
+	
+	ModelAndView modelAndView =
+		new ModelAndView(ViewNames.MAIN_MENU.getViewName());
+	
+	return modelAndView;
+
+}
+
+@RequestMapping(value = "/mainMenu", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+@ResponseBody
+public String showMenuInfo(@RequestParam Map<String, String> allParams)
+{
+	System.out.println("Parameters are: " + allParams.entrySet()); 
+	return "Menu Success"; 
+}
+//////////////////////////////////////////////////////////////Main Menu Routing//////////////////////////////////////////////////
 	// Properties
 	@Autowired
 	private EmployeeQuery employeeQuery;

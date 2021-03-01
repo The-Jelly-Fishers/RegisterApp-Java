@@ -1,14 +1,9 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!-- <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<title>Register-Employee</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-
-	<!-- link rel="stylesheet" type="text/css" href="/styles/master.css" -->
-	<!-- link rel="stylesheet" type="text/css" href="/styles/productDetail.css" -->
-
-	<!-- script type="text/javascript" src="/scripts/master.js" defer></script>
-	<script type="text/javascript" src="/scripts/productDetail.js" defer></script-->
+	<script type="text/javascript" src="/scripts/productDetail.js" defer></script
 </head>
 
 <body>
@@ -57,11 +52,7 @@
 		</div>
 
         <div id="signInForm" class="signInForm">
-            <!-- add onsubmit="" function here to verify form info. is in correct format -->
-            <!-- add th:value="" later to the input tags; for getting user data in each field -->
-            <!-- add action="..." stuff back later once Controller class is set up to take user input... -->
-            <!-- add method="post" once set up to take user input -->
-            <form id="login" onsubmit="formValidation()" th:action="@{/employeeDetail}" method="post"> <!-- test with and without post -->
+            <form id="login" onsubmit="formValidation()" th:action="@{/employeeDetail}" method="post">
                 <p id="labelFName">First Name:</p>
                 <input th:value="${fName}" type="text" id="fName" name="fName">
 				<p id="labelLName">Last Name:</p>
@@ -79,9 +70,83 @@
 
 </body>
 
+</html> -->
+
+
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Register - Employee</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" type="text/css" href="/styles/master.css">
+	<link rel="stylesheet" type="text/css" href="/styles/employeeDetail.css">
+
+	<script type="text/javascript" src="/scripts/master.js" defer></script>
+	<script type="text/javascript" src="/scripts/employeeDetail.js" defer></script>
+</head>
+
+<body>
+
+	<div class="header">
+		<h1 class="primary-message">Employee Details</h1>
+	</div>
+		
+	<div id="main" class="main">
+		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
+		</div>
+
+		<div class="employeeDetailWrapper">
+			<table id="employeeDetail">
+				<tbody>
+					<tr class="hidden">
+						<td>ID:</td>
+						<td>
+							<input id="employeeId" type="hidden" th:value="${!employee.isEmpty} ? ${employee.id} : ''" />
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Lookup Code:</td>
+						<td>
+							<input id="employeeLookupCode" type="text" th:value="${!employee.isEmpty} ? ${employee.lookupCode} : ''" class="update" />
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Count:</td>
+						<td>
+							<input id="employeeCount" type="number" th:value="${!employee.isEmpty} ? ${employee.count} : ''" class="update" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="employeeActionsWrapper">
+			<br />
+			<div id="deleteActionContainer" th:class="${employee.isEmpty} ? hidden : ''">
+				<button id="deleteButton" type="button" class="action">Delete</button>
+				<br />
+				<br />
+			</div>
+			<button id="saveButton" type="button" class="action">Save</button>
+		</div>
+
+		<div id="employeeSavedAlertModal" class="modal animate-opacity-show">
+			<div class="modal-content">
+				<div class="container gray-blue">
+					<h1>
+						<span>Employee</span><br />
+						<span>Saved</span>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+</body>
+
 </html>
-
-
 
 
 

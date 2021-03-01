@@ -4,7 +4,8 @@ public enum ViewNames {
 	PRODUCT_DETAIL("productDetail"),
 	PRODUCT_LISTING("productListing"), // made some changes here
 	EMPLOYEE_DETAIL("employeeDetail"),
-	EMPLOYEE_LISTING("signInView"); // made some changes here
+	EMPLOYEE_LISTING("signInView"), // made some changes here
+	MAIN_MENU("mainMenu"); // made some changes 2/22
 	
 	public String getRoute() {
 		return this.route;
