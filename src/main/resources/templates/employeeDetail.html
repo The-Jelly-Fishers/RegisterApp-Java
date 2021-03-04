@@ -3,18 +3,18 @@
 <head>
 	<title>Register-Employee</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<script type="text/javascript" src="/scripts/productDetail.js" defer></script
+	<script type="text/javascript" src="/scripts/employeeDetail.js" defer></script
 </head>
 
 <body>
 
     <script>
         function formValidation() {
-            var firstName = document.getElementById("fName").value;
-			var lastName = document.getElementById("lName").value;
+            var firstName = document.getElementById("firstname").value;
+			var lastName = document.getElementById("lastname").value;
             var password = document.getElementById("password").value;
-			var verPass = document.getElementById("vpass").value;
-			var empType = document.getElementById("eType").value;
+			var verPass = document.getElementById("vPass").value;
+			var empType = document.getElementById("classification").value;
             //checks all three fields for conditions, if they pass then the form is validated
             if(firstName != '' && lastName != ''&& password != ''&& verPass != ''&& empType != ''){
                 return true;
@@ -52,20 +52,24 @@
 		</div>
 
         <div id="signInForm" class="signInForm">
-            <form id="login" onsubmit="formValidation()" th:action="@{/employeeDetail}" method="post">
+            <form id="login" onsubmit="formValidation()" action="/employeeDetail" method="post">
                 <p id="labelempId">Employee ID:</p>
-                <input th:value="${empId}" type="text" id="empId" name="empId">
+                <input th:value="${employeeid}" type="number" id="employeeid" name="employeeid">
 				<p id="labelFName">First Name:</p>
-                <input th:value="${fName}" type="text" id="fName" name="fName">
+                <input th:value="${firstname}" type="text" id="firstname" name="firstname">
 				<p id="labelLName">Last Name:</p>
-                <input th:value="${lName}" type="text" id="lName" name="lName">
+                <input th:value="${lastname}" type="text" id="lastname" name="lastname">
                 <p idr="labelPassword">Password:</p>
                 <input th:value="${password}" type="password" id="password" name="password"><br>
 				<p id="labelVPass">Verify Password:</p>
                 <input th:value="${vPass}" type="password" id="vPass" name="vPass">
-				<p id="labelEmpType">Employee Type:</p>
-                <input th:value="${empType}" type="text" id="empType" name="empType">
-                <input type="submit" id="submitButton" name="submitButton">
+				<p id="labelEmpType">Employee Type:     (Note: 1 = General manager, 2 = Shift manager, and 3 = Employee) </p>
+                <input th:value="${classification}" type="number" id="classification" name="classification">
+				<input type="submit" id="submitButton" name="submitButton" value="Save"> <!-- This serves as our save button. -->
+				<hr>
+				<a href="/signInView/" onclick="errorAlert()">
+					<img src= "https://cdn2.iconfinder.com/data/icons/picons-essentials/57/logout-512.png" width="50" height="50" id="sign-out"/> 
+				</a>
             </form>
         </div>
     </div>

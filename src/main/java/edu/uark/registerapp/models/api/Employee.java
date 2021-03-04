@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import edu.uark.registerapp.models.entities.EmployeeEntity;
 
 public class Employee extends ApiResponse {
+	public static Object employee;
 	private UUID id;
 	public UUID getId() {
 		return this.id;
@@ -19,13 +20,13 @@ public class Employee extends ApiResponse {
 		return this;
 	}
 
-	private String employeeid;
+	private int employeeid;
 
-	public String getEmployeeId() {
+	public  int getEmployeeId() {
 		return this.employeeid;
 	}
 
-	public Employee setEmployeeId(final String employeeid) {
+	public Employee setEmployeeId(final int employeeid) {
 		this.employeeid = employeeid;
 		return this;
 	}
@@ -63,35 +64,35 @@ public class Employee extends ApiResponse {
 		return this;
 	}
 
-	private String active;
+	private boolean active;
 
-	public String getActive() {
+	public boolean getActive() {
 		return this.active;
 	}
 
-	public Employee setActive(final String active) {
+	public Employee setActive(final boolean active) {
 		this.active = active;
 		return this;
 	}
 
-	private String classification;
+	private int classification;
 
-	public String getClassification() {
+	public int getClassification() {
 		return this.classification;
 	}
 
-	public Employee setClassification(final String classification) {
+	public Employee setClassification(final int classification) {
 		this.classification = classification;
 		return this;
 	}
 
-	private int managerid;
+	private UUID managerid;
 
-	public int getManagerId() {
+	public UUID getManagerId() {
 		return this.managerid;
 	}
 
-	public Employee setManagerId(final int managerid) {
+	public Employee setManagerId(final UUID managerid) {
 		this.managerid = managerid;
 		return this;
 	}
@@ -117,13 +118,13 @@ public class Employee extends ApiResponse {
 		super();
 
         this.id = new UUID(0, 0);
-        this.employeeid = StringUtils.EMPTY;
+        this.employeeid = -1;
         this.firstname = StringUtils.EMPTY;
         this.lastname = StringUtils.EMPTY;
         this.password = StringUtils.EMPTY;
-        this.active = StringUtils.EMPTY;
-        this.classification = StringUtils.EMPTY;
-        this.managerid = -1;
+        this.active = false;
+        this.classification = -1;
+        //this.managerid = new UUID(0, 0);
         this.setCreatedOn(LocalDateTime.now());
 	}
 
@@ -137,7 +138,7 @@ public class Employee extends ApiResponse {
         this.password = employeeEntity.getPassword();
         this.active = employeeEntity.getActive();
         this.classification = employeeEntity.getClassification();
-        this.managerid = employeeEntity.getManagerId();
+        // this.managerid = new UUID(0, 0);
 
 		this.setCreatedOn(employeeEntity.getCreatedOn());
 	}

@@ -1,71 +1,3 @@
-// package edu.uark.registerapp.controllers;
-
-// import java.util.UUID;
-
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.RequestBody;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestMethod;
-// import org.springframework.web.bind.annotation.ResponseBody;
-// import org.springframework.web.bind.annotation.RestController;
-
-// import edu.uark.registerapp.commands.products.ProductCreateCommand;
-// import edu.uark.registerapp.commands.products.ProductDeleteCommand;
-// import edu.uark.registerapp.commands.products.ProductUpdateCommand;
-// import edu.uark.registerapp.models.api.ApiResponse;
-// import edu.uark.registerapp.models.api.Product;
-// import edu.uark.registerapp.models.api.Employee;
-// import edu.uark.registerapp.models.api.Employeesignin;
-// //import edu.uark.registerapp.models.entities.EmployeeEntity;
-
-// @RestController
-// // @RequestMapping(value = "/signInView/api/Employeesignin")
-// // public class EmployeeRestController {
-// // 	@RequestMapping(value = "/", method = RequestMethod.POST)
-// // 	public @ResponseBody ApiResponse createProduct(
-// // 		@RequestBody final Product product
-// // 	) {
-
-// 		// return this.productCreateCommand
-// 		// 	.setApiProduct(product)
-// 		// 	.execute();
-// //	}
-
-// 	// @RequestMapping(value = "/{EmployeeId}", method = RequestMethod.PUT)
-// 	// public @ResponseBody ApiResponse updateProduct(
-// 	// 	@PathVariable final UUID productId,
-// 	// 	@RequestBody final Product product
-// 	// ) {
-
-// 	// 	return this.productUpdateCommand
-// 	// 		.setProductId(productId)
-// 	// 		.setApiProduct(product)
-// 	// 		.execute();
-// 	// }
-
-// 	// @RequestMapping(value = "/{EmployeeId}", method = RequestMethod.DELETE)
-// 	// public @ResponseBody ApiResponse removeEmployee(
-// 	// 	@PathVariable final UUID EmployeeId
-// 	// ) {
-
-// 	// 	// this.removeEmployeeCommand
-// 	// 	// 	.setEmployeeId(EmployeeId)
-// 	// 	// 	.execute();
-
-// 	// 	return new ApiResponse();
-// 	// }
-
-// 	// Properties
-// 	// @Autowired
-// 	// private ProductCreateCommand productCreateCommand;
-	
-// 	//@Autowired
-// 	//private RemoveEmployeeCommand removeEmployeeCommand;
-	
-// 	// @Autowired
-// 	// private ProductUpdateCommand productUpdateCommand;
-// //}
 package edu.uark.registerapp.controllers;
 
 import java.util.UUID;
@@ -78,59 +10,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.uark.registerapp.commands.products.ProductCreateCommand;
-import edu.uark.registerapp.commands.products.ProductDeleteCommand;
-import edu.uark.registerapp.commands.products.ProductUpdateCommand;
+import edu.uark.registerapp.commands.employees.EmployeeCreateCommand;
+import edu.uark.registerapp.commands.employees.EmployeeDeleteCommand;
+import edu.uark.registerapp.commands.employees.EmployeeUpdateCommand;
 import edu.uark.registerapp.models.api.ApiResponse;
-import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.api.Employee;
-import edu.uark.registerapp.models.api.Employeesignin;
-//import edu.uark.registerapp.models.entities.EmployeeEntity;
 
-// @RestController
-// @RequestMapping(value = "/api/Employeesignin")
-// public class SignInRestController {
-	// @RequestMapping(value = "/", method = RequestMethod.POST)
-	// public @ResponseBody ApiResponse createProduct(
-	// 	@RequestBody final Product product
-	// ) {
+@RestController
+@RequestMapping(value = "/api/employeeDetail")
+public class SignInRestController {
+	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST) // may need to fix this later 
+	public @ResponseBody ApiResponse createEmployee(
+		@RequestBody final Employee employee
+	) {
 
-	// 	return this.productCreateCommand
-	// 		.setApiProduct(product)
-	// 		.execute();
-	// }
+		return this.employeeCreateCommand
+			.setApiEmployee(employee)
+			.execute();
+	}
 
-	// @RequestMapping(value = "/{EmployeeId}", method = RequestMethod.PUT)
-	// public @ResponseBody ApiResponse updateProduct(
-	// 	@PathVariable final UUID productId,
-	// 	@RequestBody final Product product
-	// ) {
+	@RequestMapping(value = "/{employeeid}", method = RequestMethod.PUT)
+	public @ResponseBody ApiResponse updateEmployee(
+		@PathVariable final int employeeId,
+		@RequestBody final Employee employee
+	) {
 
-	// 	return this.productUpdateCommand
-	// 		.setProductId(productId)
-	// 		.setApiProduct(product)
-	// 		.execute();
-	// }
+		return this.employeeUpdateCommand
+			.setEmployeeId(employeeId).setApiEmployee(employee).execute();
+    }
 
-	// @RequestMapping(value = "/{EmployeeId}", method = RequestMethod.DELETE)
-	// public @ResponseBody ApiResponse removeEmployee(
-	// 	@PathVariable final UUID EmployeeId
-	// ) {
+    @RequestMapping(value = "/{employeeid}", method = RequestMethod.DELETE)
+    public @ResponseBody ApiResponse deleteProduct(@PathVariable final int employeeId) {
 
-	// 	// this.removeEmployeeCommand
-	// 	// 	.setEmployeeId(EmployeeId)
-	// 	// 	.execute();
+        this.employeeDeleteCommand
+            .setEmployeeId(employeeId)
+			.execute();
 
-	// 	return new ApiResponse();
-	// }
+		return new ApiResponse();
+	}
 
 	// Properties
-	// @Autowired
-	// private ProductCreateCommand productCreateCommand;
+	@Autowired
+	private EmployeeCreateCommand employeeCreateCommand;
 	
-	//@Autowired
-	//private RemoveEmployeeCommand removeEmployeeCommand;
+	@Autowired
+	private EmployeeDeleteCommand employeeDeleteCommand;
 	
-	// @Autowired
-	// private ProductUpdateCommand productUpdateCommand;
-//}
+	@Autowired
+	private EmployeeUpdateCommand employeeUpdateCommand;
+}

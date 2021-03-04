@@ -5,14 +5,13 @@ public enum ViewNames {
 	PRODUCT_LISTING("productListing"), // made some changes here
 	EMPLOYEE_DETAIL("employeeDetail"),
 	EMPLOYEE_LISTING("signInView"), // made some changes here
-	MAIN_MENU("mainMenu"); // made some changes 2/22
+	MAIN_MENU("mainMenu"), // made some changes 2/22
+	MANAGER_MENU("managerMenu"); 
 	
 	public String getRoute() {
 		return this.route;
 	}
-	public String getViewName() {
-		/*if (viewName.equals("/"))
-			viewName = "";*/ 
+	public String getViewName() {  
 		return this.viewName;
 	}
 

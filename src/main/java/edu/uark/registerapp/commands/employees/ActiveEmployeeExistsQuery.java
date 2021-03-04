@@ -13,28 +13,25 @@ import edu.uark.registerapp.models.entities.EmployeeEntity;
 import edu.uark.registerapp.models.repositories.EmployeeRepository;
 
 @Service
-public class EmployeeDeleteCommand implements VoidCommandInterface {
+public class ActiveEmployeeExistsQuery implements VoidCommandInterface {
 	@Transactional
 	@Override
 	public void execute() {
-		final Optional<EmployeeEntity> employeeEntity =
-			this.employeeRepository.findByEmployeeid(this.employeeId);
-		if (!employeeEntity.isPresent()) { // No record with the associated record ID exists in the database.
-			throw new NotFoundException("employee");
+		boolean activeUserPresent = this.employeeRepository.existsByActive("active"); 
+		if (activeUserPresent == false) { // No record with the associated record ID exists in the database.
+			System.out.println("no active users right now"); 
+			// throw new NotFoundException("employee");
 		}
-
-		this.employeeRepository.delete(employeeEntity.get());
 	}
 
-	// Properties
-	private int employeeId;
-	public int getEmployeeId() {
-		return this.employeeId;
-	}
-	public EmployeeDeleteCommand setEmployeeId(final int employeeId) {
-		this.employeeId = employeeId;
-		return this;
-	}
+	// private UUID employeeId;
+	// public UUID getEmployeeId() {
+	// 	return this.employeeId;
+	// }
+	// public ActiveEmployeeExistsQuery setEmployeeId(final UUID employeeId) {
+	// 	this.employeeId = employeeId;
+	// 	return this;
+	// }
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;

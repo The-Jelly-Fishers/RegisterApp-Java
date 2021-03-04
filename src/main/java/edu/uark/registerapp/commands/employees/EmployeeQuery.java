@@ -17,7 +17,7 @@ public class EmployeeQuery implements ResultCommandInterface<Employee> {
 	@Override
 	public Employee execute() {
 		final Optional<EmployeeEntity> employeeEntity =
-			this.employeeRepository.findById(this.employeeId);
+			this.employeeRepository.findByEmployeeid(this.employeeId);
 		if (employeeEntity.isPresent()) {
 			return new Employee(employeeEntity.get());
 		} else {
@@ -26,11 +26,11 @@ public class EmployeeQuery implements ResultCommandInterface<Employee> {
 	}
 
 	// Properties
-	private UUID employeeId;
-	public UUID getEmployeeId() {
+	private int employeeId;
+	public int getEmployeeId() {
 		return this.employeeId;
 	}
-	public EmployeeQuery setEmployeeId(final UUID employeeId) {
+	public EmployeeQuery setEmployeeId(final int employeeId) {
 		this.employeeId = employeeId;
 		return this;
 	}

@@ -31,13 +31,13 @@ public class EmployeeEntity {
 
 
 	@Column(name = "employeeid")
-	private String employeeid;
+	private int employeeid;
 
-	public String getEmployeeId() {
+	public int getEmployeeId() {
 		return this.employeeid;
 	}
 
-	public EmployeeEntity setEmployeeId(final String employeeid) {
+	public EmployeeEntity setEmployeeId(final int employeeid) {
 		this.employeeid = employeeid;
 		return this;
 	}
@@ -79,39 +79,34 @@ public class EmployeeEntity {
 	}
 
     @Column(name = "active")
-	private String active;
+	private boolean active;
 
-	public String getActive() {
+	public boolean getActive() {
 		return this.active;
 	}
 
-	public EmployeeEntity setActive(final String active) {
+	public EmployeeEntity setActive(final boolean active) {
 		this.active = active;
 		return this;
 	}
 
     @Column(name = "classification")
-	private String classification;
+	private int classification;
 
-	public String getClassification() {
+	public int getClassification() {
 		return this.classification;
 	}
 
-	public EmployeeEntity setClassification(final String classification) {
+	public EmployeeEntity setClassification(final int classification) {
 		this.classification = classification;
 		return this;
 	}
 
     @Column(name = "managerid")
-	private int managerid;
+	private UUID managerid;
 
-	public int getManagerId() {
+	public UUID getManagerId() {
 		return this.managerid;
-	}
-
-	public EmployeeEntity setManagerId(final int managerid) {
-		this.managerid = managerid;
-		return this;
 	}
     
 	@Column(name = "createdon", insertable = false, updatable = false)
@@ -130,23 +125,25 @@ public class EmployeeEntity {
 		this.setPassword(apiEmployee.getPassword());
 		this.setActive(apiEmployee.getActive());
 		this.setClassification(apiEmployee.getClassification());
+		// apiEmployee.setManagerId(this.getManagerId()); 
+		// apiEmployee.setManagerId(this.getManagerId()); 
 		apiEmployee.setCreatedOn(this.getCreatedOn());
 		return apiEmployee;
 	}
 
 	public EmployeeEntity() {
 		this.id = new UUID(0, 0);
-        this.employeeid = StringUtils.EMPTY;
+        this.employeeid = -1;
         this.firstname = StringUtils.EMPTY;
         this.lastname = StringUtils.EMPTY;
         this.password = StringUtils.EMPTY;
-        this.active = StringUtils.EMPTY;
-        this.classification = StringUtils.EMPTY;
-        this.managerid = -1;
+        this.active = false;
+        this.classification = -1;
+        // this.managerid = new UUID(0,0);
 
 	}
 
-	public EmployeeEntity(final String employeeid, final String firstname, final String lastname, final String password, final String active, final String classification, final int managerid) {
+	public EmployeeEntity(final int employeeid, final String firstname, final String lastname, final String password, final boolean active, final int classification) {
 		this.id = new UUID(0, 0);
         this.employeeid = employeeid;
         this.firstname = firstname;
@@ -154,7 +151,7 @@ public class EmployeeEntity {
         this.password = password;
         this.active = active;
         this.classification = classification;
-        this.managerid = managerid;
+        // this.managerid = new UUID(0,0);
         
 	}
 
@@ -166,7 +163,7 @@ public class EmployeeEntity {
         this.password = apiEmployee.getPassword();
         this.active = apiEmployee.getActive();
         this.classification = apiEmployee.getClassification();
-        this.managerid = apiEmployee.getManagerId();
+        // this.managerid = new UUID(0, 0);
 	}
 }
 

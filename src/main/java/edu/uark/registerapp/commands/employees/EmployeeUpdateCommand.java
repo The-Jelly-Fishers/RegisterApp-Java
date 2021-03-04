@@ -23,7 +23,7 @@ public class EmployeeUpdateCommand implements ResultCommandInterface<Employee> {
 		this.validateProperties();
 
 		final Optional<EmployeeEntity> employeeEntity =
-			this.employeeRepository.findById(this.employeeId);
+			this.employeeRepository.findByEmployeeid(this.employeeId);
 		if (!employeeEntity.isPresent()) { // No record with the associated record ID exists in the database.
 			throw new NotFoundException("Employee");
 		}
@@ -39,17 +39,17 @@ public class EmployeeUpdateCommand implements ResultCommandInterface<Employee> {
 
 	// Helper methods
 	private void validateProperties() {
-		if (StringUtils.isBlank(this.apiEmployee.getEmployeeId())) {
+		if ((this.apiEmployee.getEmployeeId()) == -1) {
 			throw new UnprocessableEntityException("lookupcode");
 		}
 	}
 
 	// Properties
-	private UUID employeeId;
-	public UUID getEmployeeId() {
+	private int employeeId;
+	public int getEmployeeId() {
 		return this.employeeId;
 	}
-	public EmployeeUpdateCommand setEmployeeId(final UUID employeeId) {
+	public EmployeeUpdateCommand setEmployeeId(final int employeeId) {
 		this.employeeId = employeeId;
 		return this;
 	}

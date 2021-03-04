@@ -169,3 +169,9 @@ function getErrorMessageDisplayElement() {
 function myFunction(){
 	
 }
+
+function errorAlert()
+{
+	let errorMessage = "Functionality has not yet been implemented"; 
+	alert(errorMessage); 
+}

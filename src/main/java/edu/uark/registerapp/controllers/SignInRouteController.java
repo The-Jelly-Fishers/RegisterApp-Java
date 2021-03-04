@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.uark.registerapp.commands.employees.ActiveEmployeeExistsQuery;
+import edu.uark.registerapp.commands.employees.EmployeeCreateCommand;
 import edu.uark.registerapp.commands.employees.EmployeeQuery;
+import edu.uark.registerapp.commands.employees.EmployeeCreateCommand;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Employee;
@@ -58,23 +61,11 @@ public class SignInRouteController {
 		} catch (final Exception e) {
 			System.out.println("inside catch...");
 			ModelAndView model = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()); 
-			return model; 
-			// modelAndView.addObject(
-			// 	ViewModelNames.ERROR_MESSAGE.getValue(),
-			// 	e.getMessage());
-		}
-		/*try 
-		{
-			employeeQuery
-			ModelAndView modAndView = new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName()); 
-			return modAndView; 
-		}
-		catch (Exception e) // if no employees exist, reroute to employeeDetails so that html page is viewed first 
-		{
-			ModelAndView model = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()); 
+			System.out.println("return model"); 
+			
 			return model; 
 		}
-		*/
+		System.out.println("return modelAndView"); 
 		return modelAndView; 
 	}
 
@@ -87,80 +78,72 @@ public class SignInRouteController {
 		return "Sign Success"; 
 	}
 
-	@RequestMapping(value = "/{empId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	//@RequestMapping(value="/{empId}", method = RequestMethod.POST)
-	// @PathVariable("empId") UUID empID
-	
-	public ModelAndView startWithEmployee(@PathVariable final String empId, @RequestParam Map<String, String> allParams) {
-	//public ModelAndView startWithEmployee(@RequestParam(value = "empId", required = false ) UUID empId) {
-		// System.out.println("Parameters are: " + allParams.entrySet()); 
-		final ModelAndView modelAndView =
-			new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());//should actually be redirecting to main menu
+// 	@RequestMapping(value = "/productDetail")
+// public class ProductDetailRouteController {
+// 	@RequestMapping(method = RequestMethod.GET)
+// 	public ModelAndView start() {
+// 		return (new ModelAndView(ViewNames.PRODUCT_DETAIL.getViewName()))
+// 			.addObject(
+// 				ViewModelNames.PRODUCT.getValue(),
+// 				(new Product()).setLookupCode(StringUtils.EMPTY).setCount(0));
+// 	}
 
-		UUID employId = null; 
-		if (empId != null)
-		{
-			employId = UUID.fromString(empId); 
-		}
+	// @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
+	// original: @RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ModelAndView showDetailInfo(@RequestParam int employeeid, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String password, @RequestParam int classification)
+	{
+		System.out.println("employeeid: " + employeeid); 
+		System.out.println("firstname: " + firstname); 
+		System.out.println("lastname" + lastname); 
+		System.out.println("password" + password); 
+		System.out.println("classification" + classification); 
+
+		// newEmployee.setManagerId(-1); I think it already does this... 
+		ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());  
+
+		// try { // will reroute if no employee... is is what I have below correct? 
+		// 	System.out.println("inside try 2..."); 
+		// 	modelAndView.addObject(
+		// 	ViewModelNames.EMPLOYEE.getValue(),
+		// 	this.employeeQuery.execute());
+		// 	// ModelAndView modAndView = new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName()); 
+		// } catch (final Exception e) {
+		// 	System.out.println("inside catch 2...");
+		// 	modelAndView.addObject(
+		// 	ViewModelNames.EMPLOYEE.getValue(),
+		// 	this.employeeCreate.execute()); 
+		// }
+		Employee newEmployee = new Employee(); 
+				newEmployee.setId(UUID.randomUUID()); 
+				newEmployee.setEmployeeId(employeeid); 
+				newEmployee.setFirstName(firstname); 
+				newEmployee.setLastName(lastname); 
+				newEmployee.setPassword(password); 
+				newEmployee.setActive(false); 
+				newEmployee.setClassification(classification);
 
 		try {
 			modelAndView.addObject(
 				ViewModelNames.EMPLOYEE.getValue(),
-				this.employeeQuery.setEmployeeId(employId).execute());
+				this.employeeQuery.setEmployeeId(employeeid).execute());
 		} catch (final Exception e) {
-			modelAndView.addObject(
-				ViewModelNames.ERROR_MESSAGE.getValue(),
-				e.getMessage());
-			modelAndView.addObject(
-				ViewModelNames.EMPLOYEE.getValue(),
-				(new Employee())
-					.setPassword(" ")
-					.setEmployeeId(StringUtils.EMPTY));
-		}
-		return modelAndView;
+			System.out.println("inside inside"); 
+			modelAndView.addObject(ViewModelNames.EMPLOYEE.getValue(), newEmployee);   
+			modelAndView.addObject(ViewModelNames.EMPLOYEE.getValue(), this.employeeCreate.setApiEmployee(newEmployee).execute());   
+		} 
+
+		return modelAndView; // rerouting back to sign in page, should eventually only do this if first employee 
 	}
-//////////////////////////////////////////////////////////////Sign In View Routing///////////////////////////////////////////////
-//////////////////////////////////////////////////////////////Employee Detail Routing////////////////////////////////////////////
-	// @RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
-	// @ResponseBody
-	// // add request param later
-	// public ModelAndView showEmployeeDetail() {
-	// 	System.out.println("will it enter? ");
 		
-	// 	ModelAndView modelAndView =
-	// 		new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());
-		
-	// 	return modelAndView;
-	
-	// }
-
-	// @RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	// @ResponseBody
-	// public ModelAndView showDetailInfo(@RequestParam Map<String, String> allParams)
-	// {
-	// 	System.out.println("Parameters are: " + allParams.entrySet()); 
-
-	// 	// take parameters & put it into the database 
-
-	// 	return (new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName())); // rerouting back to sign in page, should eventually only do this if first employee 
-	// }
-
-		@RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
-		@ResponseBody
-		public ModelAndView employeeDetail() {
-			System.out.println("Employee Detail Success"); 
-
-			return (new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()));
-		}
-	
-		/*@RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
-		public ModelAndView startWithProduct(@PathVariable final UUID productId) {
-			System.out.println("Employee Detail Success");
-			final ModelAndView modelAndView =
-				new ModelAndView(ViewNames.PRODUCT_DETAIL.getViewName());
+		@RequestMapping(value = "/{employeeid}", method = RequestMethod.GET)
+		public ModelAndView startWithProduct(@RequestParam final String employeeid) {
+			System.out.println("inside employeeid"); 
+			final ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());
 			return modelAndView;
 		}
-		*/
+
+		
 //////////////////////////////////////////////////////////////Employee Detail Routing////////////////////////////////////////////
 //////////////////////////////////////////////////////////////Main Menu Routing//////////////////////////////////////////////////
 @RequestMapping(value = "/mainMenu", method = RequestMethod.GET)
@@ -171,6 +154,19 @@ public ModelAndView showMainMenu() {
 	
 	ModelAndView modelAndView =
 		new ModelAndView(ViewNames.MAIN_MENU.getViewName());
+	
+	return modelAndView;
+
+}
+
+@RequestMapping(value = "/managerMenu", method = RequestMethod.GET)
+@ResponseBody
+// add request param later
+public ModelAndView showManagerMenu() {
+	System.out.println("will it enter? ");
+	
+	ModelAndView modelAndView =
+		new ModelAndView(ViewNames.MANAGER_MENU.getViewName());
 	
 	return modelAndView;
 
@@ -187,5 +183,9 @@ public String showMenuInfo(@RequestParam Map<String, String> allParams)
 	// Properties
 	@Autowired
 	private EmployeeQuery employeeQuery;
+	@Autowired
+	private EmployeeCreateCommand employeeCreate; 
+	@Autowired
+	private ActiveEmployeeExistsQuery activeEmployee; 
 }
 	
