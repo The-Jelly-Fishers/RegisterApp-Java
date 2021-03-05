@@ -25,7 +25,7 @@ import edu.uark.registerapp.commands.EmployeeSignInCommmand;
 import edu.uark.registerapp.commands.employees.ActiveEmployeeExistsQuery;
 import edu.uark.registerapp.commands.employees.EmployeeCreateCommand;
 import edu.uark.registerapp.commands.employees.EmployeeQuery;
-import edu.uark.registerapp.commands.employees.EmployeeCreateCommand;
+import edu.uark.registerapp.commands.ActiveUserCreateCommand;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Employee;
@@ -104,6 +104,22 @@ public class SignInRouteController {
 			return modelAndView; 
 		}
 		// make an active user if gets to this part 
+		// try {
+		// 	System.out.println("trying create active user");
+		// 	modelAndView.addObject(ViewModelNames.ACTIVE_USER.getValue(), activeUser);   
+		// 	modelAndView.addObject(ViewModelNames.ACTIVE_USER.getValue(), this.activeUserCreateCommand.setApiActiveUser(activeUser).execute());
+		// } catch (final Exception e) {
+		// 	System.out.println("exeception for active user: " + e); 	   
+		// } 
+		try
+		{
+			this.activeUserCreateCommand.setApiActiveUser(activeUser).execute();
+		}
+		catch (Exception e)
+		{
+			System.out.println("active user exception: " + e);
+		}
+
 		try 
 		{
 			this.employeeSignInCommmand.setApiActiveUser(activeUser).execute(); 
@@ -138,9 +154,9 @@ public class SignInRouteController {
 	{
 		System.out.println("employeeid: " + employeeid); 
 		System.out.println("firstname: " + firstname); 
-		System.out.println("lastname" + lastname); 
-		System.out.println("password" + password); 
-		System.out.println("classification" + classification); 
+		System.out.println("lastname: " + lastname); 
+		System.out.println("password: " + password); 
+		System.out.println("classification: " + classification); 
 
 		// newEmployee.setManagerId(-1); I think it already does this... 
 		ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName());  
@@ -233,5 +249,7 @@ public String showMenuInfo(@RequestParam Map<String, String> allParams)
 	private ActiveEmployeeExistsQuery activeEmployee; 
 	@Autowired 
 	private EmployeeSignInCommmand employeeSignInCommmand; 
+	@Autowired 
+	private ActiveUserCreateCommand activeUserCreateCommand;
 }
 	

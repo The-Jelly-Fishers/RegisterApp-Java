@@ -13,48 +13,50 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.uark.registerapp.commands.employees.EmployeeCreateCommand;
 import edu.uark.registerapp.commands.employees.EmployeeDeleteCommand;
 import edu.uark.registerapp.commands.employees.EmployeeUpdateCommand;
+import edu.uark.registerapp.commands.ActiveUserCreateCommand;
+import edu.uark.registerapp.commands.ActiveUserDeleteCommand;
+import edu.uark.registerapp.models.api.ActiveUser;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.api.Employee;
 
 @RestController
-@RequestMapping(value = "/api/employeeDetail")
+@RequestMapping(value = "/{signInView}")
 public class SignInRestController {
-	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST) // may need to fix this later 
-	public @ResponseBody ApiResponse createEmployee(
-		@RequestBody final Employee employee
-	) {
+	// @RequestMapping(value = "/signInView", method = RequestMethod.POST) // this was moved to SignInRoute
+	// public @ResponseBody ApiResponse createUser(
+	// 	@RequestBody final ActiveUser user
+	// ) {
+	// 	// System.out.println("creating user");
+	// 	 return this.activeUserCreateCommand
+	// 	// 	.setApiActiveUser(user)
+	// 	// 	.execute();
+	// }
 
-		return this.employeeCreateCommand
-			.setApiEmployee(employee)
-			.execute();
-	}
+	// @RequestMapping(value = "/{employeeid}", method = RequestMethod.PUT) // not required for now
+	// public @ResponseBody ApiResponse updateEmployee(
+	// 	@PathVariable final int employeeId,
+	// 	@RequestBody final Employee employee
+	// ) {
 
-	@RequestMapping(value = "/{employeeid}", method = RequestMethod.PUT)
-	public @ResponseBody ApiResponse updateEmployee(
-		@PathVariable final int employeeId,
-		@RequestBody final Employee employee
-	) {
+	// 	return this.employeeUpdateCommand
+	// 		.setEmployeeId(employeeId).setApiEmployee(employee).execute();
+    // }
 
-		return this.employeeUpdateCommand
-			.setEmployeeId(employeeId).setApiEmployee(employee).execute();
-    }
-
-    @RequestMapping(value = "/{employeeid}", method = RequestMethod.DELETE)
-    public @ResponseBody ApiResponse deleteProduct(@PathVariable final int employeeId) {
-
-        this.employeeDeleteCommand
+    @RequestMapping(value = "/signInView", method = RequestMethod.DELETE)
+    public @ResponseBody ApiResponse deleteUser(@PathVariable final int employeeId) {
+		System.out.println("deleteing user");
+        this.activeUserDeleteCommand
             .setEmployeeId(employeeId)
 			.execute();
-
 		return new ApiResponse();
 	}
 
 	// Properties
 	@Autowired
-	private EmployeeCreateCommand employeeCreateCommand;
+	private ActiveUserCreateCommand activeUserCreateCommand;
 	
 	@Autowired
-	private EmployeeDeleteCommand employeeDeleteCommand;
+	private ActiveUserDeleteCommand activeUserDeleteCommand;
 	
 	@Autowired
 	private EmployeeUpdateCommand employeeUpdateCommand;

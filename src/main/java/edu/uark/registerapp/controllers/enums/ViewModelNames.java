@@ -7,6 +7,7 @@ public enum ViewModelNames {
 	PRODUCT("product"), // Product detail
 	EMPLOYEE("employee"), // Employee detail
 	EMPLOYEES("employees"), // Employee listing
+	ACTIVE_USER("activeUser"), 
 	MENU("menu"); // Menu listing
 	
 	public String getValue() {
