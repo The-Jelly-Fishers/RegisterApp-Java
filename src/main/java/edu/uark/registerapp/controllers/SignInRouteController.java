@@ -3,6 +3,10 @@ package edu.uark.registerapp.controllers;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.*;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.uark.registerapp.commands.EmployeeSignInCommmand;
 import edu.uark.registerapp.commands.employees.ActiveEmployeeExistsQuery;
 import edu.uark.registerapp.commands.employees.EmployeeCreateCommand;
 import edu.uark.registerapp.commands.employees.EmployeeQuery;
@@ -25,6 +30,7 @@ import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Employee;
 import edu.uark.registerapp.models.api.Employeesignin;
+import edu.uark.registerapp.models.api.ActiveUser;
 
 
 @Controller
@@ -71,25 +77,55 @@ public class SignInRouteController {
 
 	@RequestMapping(value = "/signInView", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseBody
-	public String showSignInfo(@RequestParam Map<String, String> allParams)//httpservletrequest also goes here
+	public ModelAndView showSignInfo(@RequestParam int employeeid, @RequestParam String password, HttpServletRequest request)//httpservletrequest also goes here
 	{
-		System.out.println("Parameters are: " + allParams.entrySet()); 
+		System.out.println(employeeid + " : employeeid"); 
+		System.out.println("password + " + password); 
 		System.out.println("inside sign in info");
-		return "Sign Success"; 
+		// return "Sign Success"; 
+		ActiveUser activeUser = new ActiveUser(); 
+				activeUser.setId(UUID.randomUUID()); 
+				activeUser.setEmployeeId(employeeid);
+				activeUser.setSessionKey(((request.getSession()).toString())); 
+				System.out.println("request string" + (request.getSession()).toString());
+
+
+		ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName()); 
+
+		try {
+			modelAndView.addObject(
+			ViewModelNames.EMPLOYEE.getValue(),
+			this.employeeQuery.setEmployeeId(employeeid).execute()); 
+		}
+		catch (Exception e)
+		{
+			System.out.println("This is the exeception: " + e); 
+			System.out.println("inside catchie wetchie"); 
+			return modelAndView; 
+		}
+		// make an active user if gets to this part 
+		try 
+		{
+			this.employeeSignInCommmand.setApiActiveUser(activeUser).execute(); 
+		}
+		catch (Exception e)
+		{
+			System.out.println("second exception: " + e); 
+		}
+		// have different views depending on whether or not elevated user 
+		if (this.employeeQuery.findClassification(employeeid) == 1 || this.employeeQuery.findClassification(employeeid) == 2)
+		{
+			System.out.println("inside this if statement"); 
+			ModelAndView modelandview = new ModelAndView(ViewNames.MANAGER_MENU.getViewName()); 
+			return modelandview; 
+		}
+		else 
+		{
+			ModelAndView model = new ModelAndView(ViewNames.MAIN_MENU.getViewName());
+			return model; 
+		}
 	}
 
-// 	@RequestMapping(value = "/productDetail")
-// public class ProductDetailRouteController {
-// 	@RequestMapping(method = RequestMethod.GET)
-// 	public ModelAndView start() {
-// 		return (new ModelAndView(ViewNames.PRODUCT_DETAIL.getViewName()))
-// 			.addObject(
-// 				ViewModelNames.PRODUCT.getValue(),
-// 				(new Product()).setLookupCode(StringUtils.EMPTY).setCount(0));
-// 	}
-
-	// @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
-	// original: @RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView showDetailInfo(@RequestParam int employeeid, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String password, @RequestParam int classification)
 	{
@@ -100,7 +136,7 @@ public class SignInRouteController {
 		System.out.println("classification" + classification); 
 
 		// newEmployee.setManagerId(-1); I think it already does this... 
-		ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());  
+		ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_LISTING.getViewName());  
 
 		// try { // will reroute if no employee... is is what I have below correct? 
 		// 	System.out.println("inside try 2..."); 
@@ -122,6 +158,7 @@ public class SignInRouteController {
 				newEmployee.setPassword(password); 
 				newEmployee.setActive(false); 
 				newEmployee.setClassification(classification);
+				newEmployee.setManagerId((UUID.randomUUID()).toString());
 
 		try {
 			modelAndView.addObject(
@@ -136,12 +173,12 @@ public class SignInRouteController {
 		return modelAndView; // rerouting back to sign in page, should eventually only do this if first employee 
 	}
 		
-		@RequestMapping(value = "/{employeeid}", method = RequestMethod.GET)
-		public ModelAndView startWithProduct(@RequestParam final String employeeid) {
-			System.out.println("inside employeeid"); 
-			final ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());
-			return modelAndView;
-		}
+		// @RequestMapping(value = "/{employeeid}", method = RequestMethod.GET)
+		// public ModelAndView startWithProduct(@RequestParam final String employeeid) {
+		// 	System.out.println("inside employeeid"); 
+		// 	final ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName());
+		// 	return modelAndView;
+		// }
 
 		
 //////////////////////////////////////////////////////////////Employee Detail Routing////////////////////////////////////////////
@@ -187,5 +224,7 @@ public String showMenuInfo(@RequestParam Map<String, String> allParams)
 	private EmployeeCreateCommand employeeCreate; 
 	@Autowired
 	private ActiveEmployeeExistsQuery activeEmployee; 
+	@Autowired 
+	private EmployeeSignInCommmand employeeSignInCommmand; 
 }
 	

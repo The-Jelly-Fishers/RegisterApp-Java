@@ -103,12 +103,18 @@ public class EmployeeEntity {
 	}
 
     @Column(name = "managerid")
-	private UUID managerid;
+	private String managerid;
 
-	public UUID getManagerId() {
+	public String getManagerId() {
 		return this.managerid;
 	}
-    
+
+	public EmployeeEntity setManagerId(final String managerid)
+	{
+		this.managerid = managerid; 
+		return this; 
+	}
+	
 	@Column(name = "createdon", insertable = false, updatable = false)
 	@Generated(GenerationTime.INSERT)
 	private LocalDateTime createdOn;
@@ -125,7 +131,7 @@ public class EmployeeEntity {
 		this.setPassword(apiEmployee.getPassword());
 		this.setActive(apiEmployee.getActive());
 		this.setClassification(apiEmployee.getClassification());
-		// apiEmployee.setManagerId(this.getManagerId()); 
+		this.setManagerId(apiEmployee.getManagerId()); 
 		// apiEmployee.setManagerId(this.getManagerId()); 
 		apiEmployee.setCreatedOn(this.getCreatedOn());
 		return apiEmployee;
@@ -143,7 +149,7 @@ public class EmployeeEntity {
 
 	}
 
-	public EmployeeEntity(final int employeeid, final String firstname, final String lastname, final String password, final boolean active, final int classification) {
+	public EmployeeEntity(final int employeeid, final String firstname, final String lastname, final String password, final boolean active, final int classification, final String managerid) {
 		this.id = new UUID(0, 0);
         this.employeeid = employeeid;
         this.firstname = firstname;
@@ -151,7 +157,7 @@ public class EmployeeEntity {
         this.password = password;
         this.active = active;
         this.classification = classification;
-        // this.managerid = new UUID(0,0);
+        this.managerid = managerid;
         
 	}
 
@@ -163,7 +169,7 @@ public class EmployeeEntity {
         this.password = apiEmployee.getPassword();
         this.active = apiEmployee.getActive();
         this.classification = apiEmployee.getClassification();
-        // this.managerid = new UUID(0, 0);
+        this.managerid = apiEmployee.getManagerId(); 
 	}
 }
 

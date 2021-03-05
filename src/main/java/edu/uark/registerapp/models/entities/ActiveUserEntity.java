@@ -29,13 +29,13 @@ public class ActiveUserEntity {
 	}
 
 	@Column(name = "employeeid")
-	private String employeeid;
+	private int employeeid;
 
-	public String getEmployeeId() {
+	public int getEmployeeId() {
 		return this.employeeid;
 	}
 
-	public ActiveUserEntity setEmployeeId(final String employeeid) {
+	public ActiveUserEntity setEmployeeId(final int employeeid) {
 		this.employeeid = employeeid;
 		return this;
 	}
@@ -87,27 +87,24 @@ public class ActiveUserEntity {
 	public ActiveUser synchronize(final ActiveUser apiActiveUser) {
 		//this.setCount(apiActiveUser.getCount());
 		//this.setLookupCode(apiActiveUser.getLookupCode());
-
 		apiActiveUser.setId(this.getId());
 		apiActiveUser.setEmployeeId(this.getEmployeeId());
 		apiActiveUser.setName(this.getName());
 		apiActiveUser.setClassification(this.getClassification());
 		apiActiveUser.setSessionKey(this.getSessionKey());
-
 		apiActiveUser.setCreatedOn(this.getCreatedOn());
-
 		return apiActiveUser;
 	}
 
 	public ActiveUserEntity() {
 		this.id = new UUID(0, 0);
-		this.employeeid = StringUtils.EMPTY;
+		this.employeeid = -1;
 		this.name = StringUtils.EMPTY;
 		this.classification = StringUtils.EMPTY;
 		this.sessionkey = StringUtils.EMPTY;
 	}
 
-	public ActiveUserEntity(final String employeeid, final String name, final String classification, final String sessionkey) {
+	public ActiveUserEntity(final int employeeid, final String name, final String classification, final String sessionkey) {
 		this.id = new UUID(0, 0);
 		this.employeeid = employeeid;
 		this.name = name;
@@ -116,7 +113,8 @@ public class ActiveUserEntity {
 	}
 
 	public ActiveUserEntity(final ActiveUser apiActiveUser) {
-    	this.id = new UUID(0, 0);
+    	
+		this.id = new UUID(0, 0);
 		this.employeeid = apiActiveUser.getEmployeeId();
 		this.name = apiActiveUser.getName();
 		this.classification = apiActiveUser.getClassification();

@@ -81,7 +81,7 @@
             <!-- add method="post" once set up to take user input -->
             <form id="login" onsubmit="formValidation()" th:action="@{/signInView}" method="post"> <!-- test with and without post -->
                 <p id="labelEmpID">Employee ID:</p>
-                <input th:value="${empID}" type="number" id="empID" name="empID">
+                <input th:value="${employeeid}" type="number" id="employeeid" name="employeeid">
                 <p idr="labelPassword">Password:</p>
                 <input th:value="${password}" type="password" id="password" name="password"><br>
                 <button>Submit</button> <!-- we need a button here in order to get the empID and password values via post method-->

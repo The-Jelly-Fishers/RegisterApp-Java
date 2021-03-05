@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
@@ -18,13 +20,13 @@ public class ActiveUser extends ApiResponse{
 		return this;
 	}
     
-    private String employeeid;
+    private int employeeid;
 
-	public String getEmployeeId() {
+	public int getEmployeeId() {
 		return this.employeeid;
 	}
 
-	public ActiveUser setEmployeeId(final String employeeid) {
+	public ActiveUser setEmployeeId(final int employeeid) {
 		this.employeeid = employeeid;
 		return this;
 	}
@@ -51,8 +53,7 @@ public class ActiveUser extends ApiResponse{
 		return this;
 	}
 
-    private String sessionkey;
-
+	private String sessionkey; 
 	public String getSessionKey() {
 		return this.sessionkey;
 	}
@@ -84,7 +85,7 @@ public class ActiveUser extends ApiResponse{
 		super();
 
         this.id = new UUID(0, 0);
-		this.employeeid = StringUtils.EMPTY;
+		this.employeeid = -1;
 		this.name = StringUtils.EMPTY;;
 		this.classification = StringUtils.EMPTY;;
 		this.sessionkey = StringUtils.EMPTY;;

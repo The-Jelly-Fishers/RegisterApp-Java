@@ -86,13 +86,13 @@ public class Employee extends ApiResponse {
 		return this;
 	}
 
-	private UUID managerid;
+	private String managerid;
 
-	public UUID getManagerId() {
+	public String getManagerId() {
 		return this.managerid;
 	}
 
-	public Employee setManagerId(final UUID managerid) {
+	public Employee setManagerId(final String managerid) {
 		this.managerid = managerid;
 		return this;
 	}
@@ -124,7 +124,7 @@ public class Employee extends ApiResponse {
         this.password = StringUtils.EMPTY;
         this.active = false;
         this.classification = -1;
-        //this.managerid = new UUID(0, 0);
+        this.managerid = StringUtils.EMPTY; 
         this.setCreatedOn(LocalDateTime.now());
 	}
 
@@ -138,7 +138,7 @@ public class Employee extends ApiResponse {
         this.password = employeeEntity.getPassword();
         this.active = employeeEntity.getActive();
         this.classification = employeeEntity.getClassification();
-        // this.managerid = new UUID(0, 0);
+        this.managerid = employeeEntity.getManagerId(); 
 
 		this.setCreatedOn(employeeEntity.getCreatedOn());
 	}
