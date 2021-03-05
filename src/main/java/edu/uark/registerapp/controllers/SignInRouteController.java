@@ -126,6 +126,13 @@ public class SignInRouteController {
 		}
 	}
 
+	@RequestMapping(value = "/employeeDetail", method = RequestMethod.GET)
+	public ModelAndView showDetails()
+	{
+		ModelAndView modelAndView = new ModelAndView(ViewNames.EMPLOYEE_DETAIL.getViewName()); 
+		return modelAndView; 
+	}
+
 	@RequestMapping(value = "/employeeDetail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView showDetailInfo(@RequestParam int employeeid, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String password, @RequestParam int classification)
 	{
