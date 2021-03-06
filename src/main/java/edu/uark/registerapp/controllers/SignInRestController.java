@@ -46,7 +46,7 @@ public class SignInRestController {
     public @ResponseBody ApiResponse deleteUser(@PathVariable final int employeeId) {
 		System.out.println("deleteing user");
         this.activeUserDeleteCommand
-            .setEmployeeId(employeeId)
+            //.setEmployeeId(employeeId)
 			.execute();
 		return new ApiResponse();
 	}
